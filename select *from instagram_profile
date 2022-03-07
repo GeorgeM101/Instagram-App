@@ -1,0 +1,16 @@
+                  List of relations
+ Schema |            Name            | Type  | Owner  
+--------+----------------------------+-------+--------
+ public | auth_group                 | table | access
+ public | auth_group_permissions     | table | access
+ public | auth_permission            | table | access
+ public | auth_user                  | table | access
+ public | auth_user_groups           | table | access
+ public | auth_user_user_permissions | table | access
+ public | django_admin_log           | table | access
+ public | django_content_type        | table | access
+ public | django_migrations          | table | access
+ public | django_session             | table | access
+ public | instagram_profile          | table | access
+(11 rows)
+
