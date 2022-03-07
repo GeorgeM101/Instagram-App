@@ -20,3 +20,15 @@ class Post(models.Model):
     description = models.CharField(max_length=800, null=True, blank=True)
     location = models.CharField(max_length=50, null=True, blank=True)
     date_posted = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        ordering = ['-posted_on']
+    
+    def __str__(self):
+        return self.description
+
+    def save_post(self):
+        self.save()
+
+    def delete_image(self):
+        self.delete()
