@@ -1,0 +1,30 @@
+{% extends 'base.html' %} {% block title %}
+<title>Register</title>
+{% endblock %} {% block content %}
+<div class="container">
+  <div>
+    {% for message in messages %}
+    <h3 class="text-center mt-3" style="color: #f2658d">{{ message }}</h3>
+    {% endfor %}
+  </div>
+  <form action="{% url 'register' %}" class="register" method="POST">
+    {% csrf_token %}
+    <label for="firstname">First Name</label>
+    <input name="firstname" type="text" placeholder="first name..." />
+    <label for="lastname">Last Name</label>
+    <input name="lastname" type="text" placeholder="last name..." />
+    <label for="username">Username</label>
+    <input name="username" type="text" placeholder="username..." />
+    <label for="email">Email</label>
+    <input name="email" type="email" placeholder="email..." />
+    <label for="password">Password</label>
+    <input name="password" type="password" placeholder="password..." />
+    <small style="font-family: Nunito; margin-left: 50px"
+      ><a class="text-decoration-none text-white" href="{% url 'login' %}"
+        >Already have an account? Login</a
+      ></small
+    >
+    <button class="btn2" type="submit">Submit</button>
+  </form>
+</div>
+{% endblock %}
