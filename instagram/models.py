@@ -19,7 +19,7 @@ class Post(models.Model):
     author = models.ForeignKey(Profile, on_delete= models.CASCADE)
     description = models.CharField(max_length=800, null=True, blank=True)
     location = models.CharField(max_length=50, null=True, blank=True)
-    date_posted = models.DateTimeField(default=timezone.now)
+    posted_on = models.DateTimeField(default=timezone.now)
 
     class Meta:
         ordering = ['-posted_on']
@@ -36,4 +36,3 @@ class Post(models.Model):
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post_liked = models.ForeignKey(Post, on_delete=models.CASCADE)
-    
