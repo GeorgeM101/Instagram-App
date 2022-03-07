@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 # Create your models here.
 
@@ -12,3 +13,10 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+class Post(models.Model):
+    author = models.ForeignKey(Profile, on_delete= models.CASCADE)
+    description = models.CharField(max_length=800, null=True, blank=True)
+    location = models.CharField(max_length=50, null=True, blank=True)
+    date_posted = models.DateTimeField(default=timezone.now)
