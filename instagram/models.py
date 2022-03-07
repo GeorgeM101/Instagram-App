@@ -32,3 +32,8 @@ class Post(models.Model):
 
     def delete_image(self):
         self.delete()
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post_liked = models.ForeignKey(Post, on_delete=models.CASCADE)
+    
