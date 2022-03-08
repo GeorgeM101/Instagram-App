@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
+from .models import Profile, Post,  Comment
 
 # Create your views here.
 def home(request):
@@ -42,3 +43,16 @@ def login(request):
             return redirect('login')
     else:
         return render(request,'login.html')
+
+def index(request):
+    current_user = request.user
+    if request.method == 'POST':
+        image = request.FILES.get('image')
+        name = request.POST['name']
+        caption = request.POST['caption']
+
+        new_post = Post(user=current_user,picture=image,title=name,caption=caption,profile=current_user.profile)
+        new_post.save()
+    posts = Post.objects.all()
+    user = User.objects.all()
+    return render(request,'index.html',{'posts':posts,'user':user,'current_user':current_user})
