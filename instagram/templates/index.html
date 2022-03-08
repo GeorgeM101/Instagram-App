@@ -1,0 +1,146 @@
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="sidebar_section position-sticky">
+        <div class="d-flex align-items-center justify-content-between mt-5">
+          <div>
+            {% if current_user.profile.profile_photo %}
+            <img
+              class="img-fluid home_profile"
+              src="{{ current_user.profile.profile_photo.url }}"
+              alt=""
+            />
+            {% else %}
+            <img
+              class="img-fluid home_profile"
+              src="../static/Images/default_profile.png"
+              alt=""
+            />
+            {% endif %}
+            <small style="font-family: Nunito">{{ current_user }}</small><br />
+          </div>
+          <div>
+            <h6 style="font-family: Nunito; color: #f2658d">Switch</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="d-flex align-items-center justify-content-between">
+  <div class="follow_img mt-4">
+    {% if user.profile.profile_photo %}
+    <img
+      class="img-fluid"
+      src="{{ user.profile.profile_photo.url }}"
+      alt=""
+    /><br />
+    {% else %}
+    <img class="img-fluid" src="../static/Images/logo.png" alt="" /><br />
+    {% endif %}
+    <small style="font-family: NUnito">{{ user.username }}</small>
+  </div>
+  <div>
+    <p style="font-family: Nunito; color: #f2658d">Follow</p>
+  </div>
+</div>
+</div>
+</div>
+{% if current_user %}
+<div class="d-flex justify-content-between align-items-center mt-3 mb-4">
+    <h4 style="font-family: Nunito;" class="text-white">Hello, {{ current_user }}</h4>
+    <!-- search form -->
+    <form action="{% url 'search_results' %}" role="search" method="get">
+        {% csrf_token %}
+        <div class="input-group">
+            <input class="form-control" type="text" name="post" placeholder="search" style="background: #282A34; border-radius: 5px;color: white;font-family: Nunito;">
+            <div class="input-group-btn">
+                <button class="btn" style="background: #F2658D;">
+                  <i class="bi bi-search text-white"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+    <h4 style="margin-left: 30px;margin-top: 4px;"><a class="text-decoration-none text-white" style="font-family: Nunito;" href="{% url 'logout' %}">Log out</a></h4>
+    <h4 style="margin-left: 30px;margin-top: 4px;"><a class="text-decoration-none text-white" style="font-family: Nunito;" href="{% url 'profile' %}">View Profile</a></h4>
+</div>
+{% endif %}
+<div class="top_imgBox">
+    {% for user in user %}
+    {% if user.profile.profile_photo %}
+    <img class="img-fluid" src="{{ user.profile.profile_photo.url }}" alt="">
+    {% else %}
+    <img class="img-fluid" src="../static/Images/default_profile.png" alt="">
+    {% endif %}
+    {% endfor %}
+</div>
+<!-- Feed section -->
+<div class="feed_section">
+    <div class="d-flex align-items-center">
+        <h1 class="mt-5" style="font-weight: 600;">Feed</h1>
+        <svg data-bs-toggle="modal" data-bs-target="#exampleModal"
+            style="margin-left: 30px;margin-top:38px;color:#F2658D;cursor:pointer;"
+            xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor"
+            class="bi bi-plus-lg" viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+        </svg>
+    </div>
+    <div class="post_section">
+        <div class="row">
+            {% for post in posts %}
+            <div class="col-md-6 post_item mt-4">
+                <img class="img-fluid" src="{{ post.picture.url }}" alt="">
+                <div class="d-flex align-items-center justify-content-between">
+                    <a href="{{ post.get_absolute_url }}" class="m-2" style="font-family: Poppins;font-weight: bold;color: white;">
+                        {{ post.title }}</a>
+                    <form action="{% url 'like-post' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="post_id" value="{{ post.id }}">
+                        {% if user not in post.liked.all %}
+                        <button type="submit" style="background: #F2658D;border: none;color: white;border-radius: 3px;height: 25px;">Like</button>
+                        {% else %}
+                        <button type="submit">Unlike</button>
+                        {% endif %}
+                    </form>
+                    <strong style="font-family: Nunito;color: white;">{{ post.liked.all.count }} likes</strong>
+                    <a href="{{ post.get_absolute_url }}"><i class="bi bi-chat-fill" style="color: #F2658D;cursor: pointer;"></i></a>
+                </div>
+                <small class="m-2" style="font-family: Nunito;"><strong style="color: #F2658D;">{{ post.profile.user }}</strong> - {{ post.caption }} <small class="text-muted">{{ post.post_date|timesince }} ago</small></small><br>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+<!-- POST MODAL -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title text-center" id="exampleModalLabel" style="font-family: Nunito;">Create new
+            post</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        <!-- caption form -->
+        <form action="{% url 'home' %}" method="POST" class="caption_form" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input name="image" class="mb-5" type="file" style="font-family: Nunito;">
+            <input class="name mb-3" name="name" type="text" placeholder="Provide a name...">
+            <div class="d-flex align-items-center">
+                <input name="caption" style="border: none;" type="text" placeholder="Write a caption...">
+                <button type="submit" class="comment_button">Share</button>
+            </div>
+        </form>
+        <!-- End of caption form -->
+    </div>
+</div>
+</div>
+</div>
+<!-- END OF POST MODAL -->
+</div>
+{% endblock %}
