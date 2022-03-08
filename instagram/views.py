@@ -69,3 +69,7 @@ def search_results(request):
     else:
         message = "You haven't searched for any term"
         return render(request, 'search.html',{"message":message})
+        
+def logout(request):
+    auth.logout(request)
+    return redirect('login')
