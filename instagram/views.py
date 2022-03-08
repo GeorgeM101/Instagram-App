@@ -56,3 +56,16 @@ def index(request):
     posts = Post.objects.all()
     user = User.objects.all()
     return render(request,'index.html',{'posts':posts,'user':user,'current_user':current_user})
+
+def search_results(request):
+
+    if 'article' in request.GET and request.GET["post"]:
+        search_term = request.GET.get("post")
+        searched_posts = Post.search_by_title(search_term)
+        message = f"{search_term}"
+
+        return render(request, 'search.html',{"message":message,"posts": searched_posts})
+
+    else:
+        message = "You haven't searched for any term"
+        return render(request, 'search.html',{"message":message})
