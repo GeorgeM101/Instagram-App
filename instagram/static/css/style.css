@@ -1,0 +1,236 @@
+@import url("https://fonts.googleapis.com/css2?family=Cookie&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Caveat&family=Great+Vibes&family=Nunito:wght@400;500;600;900&family=Poppins:wght@200;300;400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Caveat&family=Great+Vibes&family=Nunito:wght@400;500;600;900&family=Poppins:wght@200;300;400;600&display=swap");
+
+body {
+  background: #3c3f51;
+}
+h1,
+h2,
+h3 {
+  font-family: Nunito;
+  color: white;
+}
+/* Register */
+.register {
+  background: #282a34;
+  border-radius: 10px;
+  padding: 20px;
+  width: 35%;
+  margin: auto;
+  margin-top: 5vh;
+  margin-bottom: 16vh;
+}
+.register > input {
+  font-family: Nunito;
+  color: white;
+  border-radius: 4px;
+  background: #3c3f51;
+  display: block;
+  padding: 5px;
+  width: 100%;
+  border: none;
+  margin: 6px;
+}
+.register > input:focus {
+  border: none;
+  outline: 0;
+}
+.register > input::-webkit-input-placeholder {
+  font-family: Nunito;
+  color: white;
+  font-size: 12px;
+}
+.register > label {
+  color: white;
+  font-family: Nunito;
+}
+.btn2 {
+  width: 100%;
+  background: #f2658d;
+  color: white;
+  border: none;
+  font-family: Nunito;
+  border-radius: 3px;
+  margin: 4px;
+}
+/* navbar section */
+.navbar-brand {
+  font-family: "Cookie", cursive;
+  color: white;
+  font-size: 40px;
+}
+.navbar-brand:hover {
+  color: white;
+}
+.form > input {
+  background: #484b58;
+  border: none;
+  border-radius: 20px;
+  font-family: Nunito;
+}
+.form > input:focus {
+  background: #484b58;
+  box-shadow: none;
+  color: white;
+}
+.form > input::-webkit-input-placeholder {
+  color: white;
+}
+.img1 {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border: 2px solid #f2658d;
+  padding: 2px;
+  border-radius: 999px;
+}
+.dropdown-toggle {
+  color: #f2658d;
+}
+.dropdown-toggle:hover {
+  color: #f2658d;
+}
+.dropdown-item {
+  font-family: Nunito;
+}
+/* profiles section */
+
+.top_imgBox {
+  display: flex;
+  align-items: center;
+  width: 80%;
+  margin: auto;
+}
+.top_imgBox > img {
+  margin: 5px;
+  height: 70px;
+  width: 70px;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 2px solid #f2658d;
+  padding: 3px;
+}
+/* post section */
+.name {
+  font-family: Nunito;
+  background: transparent;
+  border: none;
+  outline: 0;
+  color: white;
+}
+.name::-webkit-input-placeholder {
+  color: white;
+}
+.comment_button {
+  background: transparent;
+  border: none;
+  color: #f2658d;
+  font-family: Poppins;
+  font-weight: bold;
+}
+.modal-content {
+  background: #3c3f51;
+  color: white;
+}
+.caption_form > div > input {
+  background: #3c3f51;
+  width: 100%;
+  border: none;
+  font-family: Nunito;
+  color: white;
+}
+.caption_form > div > input::-webkit-input-placeholder {
+  color: white;
+}
+.caption_form > div > input:focus {
+  border: none;
+  outline: 0;
+  background: transparent;
+}
+svg {
+  cursor: pointer;
+}
+small {
+  color: white;
+}
+.post_item > img {
+  border-radius: 20px;
+  height: 260px;
+  width: 100%;
+  object-fit: cover;
+}
+.profile_img {
+  width: 250px;
+  height: 250px;
+  border-radius: 999px;
+  border: 2px solid #f2658d;
+  padding: 3px;
+  object-fit: cover;
+}
+/* profile */
+.btn1 {
+  background: #da4453; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #89216b,
+    #da4453
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #89216b,
+    #da4453
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  border: none;
+  border-radius: 10px;
+  color: white;
+  padding: 10px;
+  font-family: Nunito;
+}
+.profile > img {
+  border-radius: 20px;
+}
+/* footer */
+footer {
+  color: white;
+  background: #282a34;
+}
+.title > h1 {
+  font-family: "Cookie", cursive;
+}
+.title > h4 {
+  font-family: Nunito;
+}
+.title > p {
+  font-family: Nunito;
+}
+/* sidebar section */
+.sidebar_section {
+  background: #282a34;
+  padding-left: 15px;
+  height: 100vh;
+  padding-right: 15px;
+  padding-bottom: 30px;
+  top: 0;
+  position: sticky;
+}
+.follow_img > img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 999px;
+}
+.home_profile {
+  width: 80px;
+  height: 80px;
+  border-radius: 999px;
+  object-fit: cover;
+}
+/* Comment section */
+.comment_body {
+  background: #282a34;
+  padding: 10px;
+}
+.comment_body > small {
+  font-family: Nunito;
+}

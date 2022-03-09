@@ -1,9 +1,11 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
 from .models import Profile, Post,  Comment
 
 # Create your views here.
+
+
 def home(request):
     return render(request, 'index.html')
 
@@ -17,32 +19,35 @@ def register(request):
         password = request.POST['password']
 
         if User.objects.filter(username=username).exists():
-            messages.info(request,'Username already taken!')
+            messages.info(request, 'Username already taken!')
             return redirect('register')
         elif User.objects.filter(email=email).exists():
-            messages.info(request,'Email already exists!')
+            messages.info(request, 'Email already exists!')
             return redirect('register')
         else:
-            user = User.objects.create_user(username=username,password=password,email=email,first_name=first_name,last_name=last_name)
+            user = User.objects.create_user(
+                username=username, password=password, email=email, first_name=first_name, last_name=last_name)
             user.save()
             print('user created')
             return redirect('login')
-    return render(request,'register.html')
+    return render(request, 'register.html')
+
 
 def login(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
 
-        user = auth.authenticate(username=username,password=password)
+        user = auth.authenticate(username=username, password=password)
         if user is not None:
-            auth.login(request,user)
+            auth.login(request, user)
             return redirect('/')
         else:
-            messages.info(request,'Invalid Credentials')
+            messages.info(request, 'Invalid Credentials')
             return redirect('login')
     else:
-        return render(request,'login.html')
+        return render(request, 'login.html')
+
 
 def index(request):
     current_user = request.user
@@ -51,11 +56,13 @@ def index(request):
         name = request.POST['name']
         caption = request.POST['caption']
 
-        new_post = Post(user=current_user,picture=image,title=name,caption=caption,profile=current_user.profile)
+        new_post = Post(user=current_user, picture=image, title=name,
+                        caption=caption, profile=current_user.profile)
         new_post.save()
     posts = Post.objects.all()
     user = User.objects.all()
-    return render(request,'index.html',{'posts':posts,'user':user,'current_user':current_user})
+    return render(request, 'index.html', {'posts': posts, 'user': user, 'current_user': current_user})
+
 
 def search_results(request):
 
@@ -64,12 +71,31 @@ def search_results(request):
         searched_posts = Post.search_by_title(search_term)
         message = f"{search_term}"
 
-        return render(request, 'search.html',{"message":message,"posts": searched_posts})
+        return render(request, 'search.html', {"message": message, "posts": searched_posts})
 
     else:
         message = "You haven't searched for any term"
-        return render(request, 'search.html',{"message":message})
-        
+        return render(request, 'search.html', {"message": message})
+
+
 def logout(request):
     auth.logout(request)
     return redirect('login')
+
+
+def profile(request):
+    current_user = request.user
+    posts = Post.objects.all()
+
+    if request.method == 'POST':
+        image = request.FILES.get('image')
+        location = request.POST['location']
+        bio = request.POST['bio']
+
+        new_profile = Profile(
+            user=request.user, location=location, bio=bio, profile_photo=image)
+        new_profile.save()
+        print(new_profile)
+        return render(request, 'profile.html', {'profile': new_profile, 'posts': posts, 'current_user': current_user})
+    else:
+        return render(request, 'profile.html', {'current_user': current_user})
