@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Profile page</title>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    {% include 'navbar.html' %}
+    <div class="row" style="margin-bottom: 36vh;">
+        <div class="col-md-6">
+            {% if current_user.profile.profile_photo %}
+            <img class="img-fluid profile_img" src="{{ current_user.profile.profile_photo.url }}" alt="">
+            {% else %}
+            <img class="img-fluid profile_img" src="../static/Images/default_profile.png" alt="">
+            {% endif %}
+        </div>
+        <div class="col-md-6 bio">
+            <div class="d-flex align-items-center">
+            {% if user.is_authenticated %}
+                <h3>{{ user.username }}</h3>
+                <button data-bs-toggle="modal" data-bs-target="#profileModal" class="m-3 btn1 btn-sm">Create Profile</button>
+            </div>
+            <h6 style="color: white;font-family: Nunito;">Location: {{ user.profile.location }}</h6>
+            <h2>450 Posts</h2>
+            <h4 style="color: white;font-family: Nunito;">{{ user.first_name}} {{ user.last_name }}</h4>
+            <h6 style="color: white;font-family: Nunito;">Bio:</h6>
+            <p style="color: white;font-family: Nunito;">{{ user.profile.bio }}</p>
+            {% if user == request.user %}
+            {% else %}
+            {% if is_following %}
+            <form action="{% url 'remove-follower' profile.pk %}" method="'POST">
+                {% csrf_token %}
+                <button type="submit" class="btn-btn-outline-danger">Unfollow</button>
+            </form>
+            {% else %}
+            <form action="{% url 'add-follower' profile.pk %}" method="'POST">
+                {% csrf_token %}
+                <button type="submit" class="btn-btn-outline-success">Follow</button>
+            </form>
+            {% endif %}
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+    <!-- posts section -->
+    </div>
+
+    <!-- PROFILE MODAL -->
+    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" id="exampleModalLabel" style="font-family: Nunito;">Create new
+                        post</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- caption form -->
+                    <form action="{% url 'profile' %}" method="POST" class="caption_form" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input name="image" class="mb-5" type="file" style="font-family: Nunito;">
+                        <input style="width: 100%;" class="name mb-3" name="location" type="text" placeholder="Provide location..."><br>
+                        <textarea style="width: 100%;" class="name mb-3" name="bio" type="text" placeholder="Provide a your bio..."></textarea>
+                        <div class="d-flex align-items-center">
+                        <button type="submit" class="comment_button">Update</button>
+                        </div>
+                    </form>
+                    <!-- End of caption form -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END OF PROFILE MODAL -->
+</div>
+{% endblock %}
